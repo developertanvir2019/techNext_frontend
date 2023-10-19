@@ -1,18 +1,14 @@
 import "./App.css";
+import { RouterProvider } from "react-router-dom";
+import { routes } from "./routes/routes";
+import DataProvider from "./Context/valueProvider";
 
 function App() {
   return (
     <>
-      <h2 className="text-5xl font-bold text-center text-cyan-600">
-        text primary
-      </h2>
-      <button className="btn">Button</button>
-      <button className="btn btn-neutral">Neutral</button>
-      <button className="btn btn-primary">Primary</button>
-      <button className="btn btn-secondary">Secondary</button>
-      <button className="btn btn-accent">Accent</button>
-      <button className="btn btn-ghost">Ghost</button>
-      <button className="btn btn-link">Link</button>
+      <DataProvider>
+        <RouterProvider router={routes} />
+      </DataProvider>
     </>
   );
 }

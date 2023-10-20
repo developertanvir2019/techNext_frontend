@@ -19,11 +19,11 @@ const Pagination = () => {
   };
 
   return (
-    <div className="flex justify-center space-x-4 dark:text-gray-100 mt-6">
+    <div className="flex justify-center  dark:text-gray-100 mt-6">
       <button
         title="previous"
         type="button"
-        className="inline-flex items-center justify-center w-10 h-10 py-0 border rounded-md shadow-md dark:bg-gray-900 dark:border-gray-800"
+        className="inline-flex items-center justify-center w-8 h-10 py-0 border rounded-md dark:bg-gray-900 dark:border-gray-800"
         onClick={handlePrevClick}
       >
         <svg
@@ -43,8 +43,8 @@ const Pagination = () => {
           key={index}
           type="button"
           title={`Page ${index + 1}`}
-          className={`inline-flex items-center justify-center w-10 h-10 text-sm font-semibold border rounded shadow-md dark:bg-gray-900 dark:text-violet-400 dark:border-violet-400 ${
-            pageNumber === index + 1 ? "bg-black text-white" : ""
+          className={`inline-flex items-center justify-center w-8 h-10 text-sm font-semibold border ${
+            pageNumber === index + 1 ? "bg-blue-600 text-white" : ""
           }`}
           onClick={() => handlePageClick(index + 1)}
         >
@@ -54,7 +54,7 @@ const Pagination = () => {
       <button
         title="next"
         type="button"
-        className="inline-flex items-center justify-center w-10 h-10 py-0 border rounded-md shadow-md dark:bg-gray-900 dark:border-gray-800"
+        className="inline-flex items-center justify-center w-8 h-10 py-0 border rounded-md dark:bg-gray-900 dark:border-gray-800"
         onClick={handleNextClick}
       >
         <svg

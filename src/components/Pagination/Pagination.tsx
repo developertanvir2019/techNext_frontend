@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { DataContext } from "../../Context/valueProvider";
 
 const Pagination = () => {
-  const [pageNumber, setPageNumber] = useState(1);
+  const { pageNumber, setPageNumber } = useContext(DataContext) as {
+    pageNumber: number;
+    setPageNumber: (pageNumber: number) => void;
+  };
   const handlePageClick = (page: number) => {
     setPageNumber(page);
   };

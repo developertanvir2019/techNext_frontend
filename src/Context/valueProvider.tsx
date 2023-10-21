@@ -3,11 +3,11 @@ import { useState, createContext, ReactNode } from "react";
 export const DataContext = createContext({});
 
 const DataProvider = ({ children }: { children: ReactNode }) => {
-  const [category, setCategory] = useState("amifjwo");
+  const [pageNumber, setPageNumber] = useState(1);
 
   const DataInfo = {
-    category,
-    setCategory,
+    pageNumber,
+    setPageNumber,
   };
 
   return (

@@ -1,22 +1,26 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import Spinner from "../Spinner/Spinner";
 import { useLaunchesData } from "./useLaunchesData";
 import { DataContext } from "../../Context/valueProvider";
 
 const AllLaunch = () => {
-  const { pageNumber, searchInput, launchStatusFilter, dateFilter } =
-    useContext(DataContext) as {
-      pageNumber: number;
-      searchInput: string;
-      launchStatusFilter: string;
-      dateFilter: string;
-    };
+  const {
+    pageNumber,
+    searchInput,
+    launchStatusFilter,
+    dateFilter,
+    upcomingFilter,
+  } = useContext(DataContext) as {
+    pageNumber: number;
+    searchInput: string;
+    launchStatusFilter: string;
+    dateFilter: string;
+    upcomingFilter: boolean;
+  };
   const perPage = 9;
   const skip = (pageNumber - 1) * perPage;
   const { loading, launches } = useLaunchesData();
   console.log(launches);
-
-  const [upcomingFilter, setUpcomingFilter] = useState(false); // State for upcoming filter
 
   // Filter launches based on selected filters
   const filteredLaunches = launches.filter((launch) => {

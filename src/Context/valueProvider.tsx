@@ -7,6 +7,7 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
   const [searchInput, setSearchInput] = useState("");
   const [launchStatusFilter, setLaunchStatusFilter] = useState("");
   const [dateFilter, setDateFilter] = useState("");
+  const [upcomingFilter, setUpcomingFilter] = useState(false);
   const DataInfo = {
     pageNumber,
     setPageNumber,
@@ -16,6 +17,8 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     setLaunchStatusFilter,
     dateFilter,
     setDateFilter,
+    upcomingFilter,
+    setUpcomingFilter,
   };
 
   return (

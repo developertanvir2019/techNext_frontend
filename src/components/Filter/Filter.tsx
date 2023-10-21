@@ -1,15 +1,20 @@
 import { FiCheck, FiSearch } from "react-icons/fi";
 import { HiChevronDown } from "react-icons/hi";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { DataContext } from "../../Context/valueProvider";
 const Filter = () => {
-  const [checked, setChecked] = useState(false);
-  const { setSearchInput, setLaunchStatusFilter, setDateFilter } = useContext(
-    DataContext
-  ) as {
+  const {
+    setSearchInput,
+    setLaunchStatusFilter,
+    setDateFilter,
+    upcomingFilter,
+    setUpcomingFilter,
+  } = useContext(DataContext) as {
     setSearchInput: (searchInput: string) => void;
     setLaunchStatusFilter: (launchStatusFilter: string) => void;
     setDateFilter: (dateFilter: string) => void;
+    upcomingFilter: boolean;
+    setUpcomingFilter: (upcomingFilter: boolean) => void;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -54,8 +59,8 @@ const Filter = () => {
             <input
               className="peer h-4 w-4 cursor-pointer appearance-none rounded border-2 border-slate-500 bg-white transition-colors checked:border-blue-600 checked:bg-blue-600 focus:outline-none   focus-visible:outline-none disabled:cursor-not-allowed disabled:border-slate-100 disabled:bg-slate-50"
               type="checkbox"
-              checked={checked}
-              onChange={() => setChecked(!checked)}
+              checked={upcomingFilter}
+              onChange={() => setUpcomingFilter(!upcomingFilter)}
               id="id-c01"
             />
             <label

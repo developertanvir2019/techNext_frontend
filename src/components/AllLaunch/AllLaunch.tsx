@@ -48,7 +48,10 @@ const AllLaunch = () => {
           new Date(currentDate.getTime() - 30 * 24 * 60 * 60 * 1000)) ||
       (dateFilter === "year" &&
         launchDate >=
-          new Date(currentDate.getTime() - 365 * 24 * 60 * 60 * 1000));
+          new Date(currentDate.getTime() - 365 * 24 * 60 * 60 * 1000)) ||
+      (dateFilter === "5year" &&
+        launchDate >=
+          new Date(currentDate.getTime() - 5 * 365 * 24 * 60 * 60 * 1000));
 
     const upcomingMatch = !upcomingFilter || launch?.upcoming;
 

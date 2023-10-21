@@ -5,6 +5,7 @@ import axios from "axios";
 export function useLaunchesData() {
   interface LaunchData {
     flight_number: number;
+    upcoming: boolean;
     launch_date_local: string;
     links: {
       mission_patch_small: string;

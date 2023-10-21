@@ -4,8 +4,12 @@ import { useContext, useState } from "react";
 import { DataContext } from "../../Context/valueProvider";
 const Filter = () => {
   const [checked, setChecked] = useState(false);
-  const { setSearchInput } = useContext(DataContext) as {
+  const { setSearchInput, setLaunchStatusFilter, setDateFilter } = useContext(
+    DataContext
+  ) as {
     setSearchInput: (searchInput: string) => void;
+    setLaunchStatusFilter: (launchStatusFilter: string) => void;
+    setDateFilter: (dateFilter: string) => void;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -58,7 +62,7 @@ const Filter = () => {
               className="cursor-pointer pl-2 text-slate-500 peer-disabled:cursor-not-allowed peer-disabled:text-slate-400"
               htmlFor="id-c01"
             >
-              Primary Checkbox
+              Show upcoming only
             </label>
             <div className="text-white  pointer-events-none absolute left-0 top-1 h-4 w-4  fill-white stroke-white opacity-0 transition-all duration-300 peer-checked:rotate-0 peer-checked:opacity-100 peer-disabled:cursor-not-allowed">
               <FiCheck />
@@ -71,17 +75,18 @@ const Filter = () => {
           <div>
             <div className="relative my-6 w-60 ">
               <select
-                id="id-04"
-                name="id-04"
+                onChange={(e) => setLaunchStatusFilter(e.target.value)}
+                id="status"
+                name="status"
                 required
                 className="peer relative h-10 w-full appearance-none rounded border border-slate-200 bg-white px-4 text-sm text-slate-500 outline-none transition-all autofill:bg-white focus:border-emerald-500 focus-visible:outline-none focus:focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
               >
                 <option value="" disabled selected></option>
-                <option value="1">Failure</option>
-                <option value="2">Success</option>
+                <option value="fail">Failure</option>
+                <option value="success">Success</option>
               </select>
               <label
-                htmlFor="id-04"
+                htmlFor="status"
                 className="pointer-events-none absolute top-2.5 left-2 z-[1] px-2 text-sm text-slate-400 transition-all before:absolute before:top-0 before:left-0 before:z-[-1] before:block before:h-full before:w-full before:bg-white before:transition-all  peer-valid:-top-2 peer-valid:text-xs peer-focus:-top-2 peer-focus:text-xs peer-focus:text-emerald-500 peer-disabled:cursor-not-allowed peer-disabled:text-slate-400 peer-disabled:before:bg-transparent"
               >
                 Launch by Status
@@ -95,18 +100,19 @@ const Filter = () => {
           <div>
             <div className="relative my-6 w-60">
               <select
-                id="id-04"
-                name="id-04"
+                onChange={(e) => setDateFilter(e.target.value)}
+                id="date"
+                name="date"
                 required
                 className="peer relative h-10 w-full appearance-none rounded border border-slate-200 bg-white px-4 text-sm text-slate-500 outline-none transition-all autofill:bg-white focus:border-emerald-500 focus-visible:outline-none focus:focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
               >
                 <option value="" disabled selected></option>
-                <option value="1">Last Week</option>
-                <option value="2">Last Month</option>
-                <option value="3">Last Year</option>
+                <option value="week">Last Week</option>
+                <option value="month">Last Month</option>
+                <option value="year">Last Year</option>
               </select>
               <label
-                htmlFor="id-04"
+                htmlFor="date"
                 className="pointer-events-none absolute top-2.5 left-2 z-[1] px-2 text-sm text-slate-400 transition-all before:absolute before:top-0 before:left-0 before:z-[-1] before:block before:h-full before:w-full before:bg-white before:transition-all  peer-valid:-top-2 peer-valid:text-xs peer-focus:-top-2 peer-focus:text-xs peer-focus:text-emerald-500 peer-disabled:cursor-not-allowed peer-disabled:text-slate-400 peer-disabled:before:bg-transparent"
               >
                 Launch by date

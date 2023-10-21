@@ -1,22 +1,58 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Spinner from "../Spinner/Spinner";
 import { useLaunchesData } from "./useLaunchesData";
 import { DataContext } from "../../Context/valueProvider";
 
 const AllLaunch = () => {
-  const { pageNumber, searchInput } = useContext(DataContext) as {
-    pageNumber: number;
-    searchInput: string;
-  };
+  const { pageNumber, searchInput, launchStatusFilter, dateFilter } =
+    useContext(DataContext) as {
+      pageNumber: number;
+      searchInput: string;
+      launchStatusFilter: string;
+      dateFilter: string;
+    };
   const perPage = 9;
-  const skip = pageNumber * perPage;
+  const skip = (pageNumber - 1) * perPage;
   const { loading, launches } = useLaunchesData();
-
   console.log(launches);
+
+  const [upcomingFilter, setUpcomingFilter] = useState(false); // State for upcoming filter
+
+  // Filter launches based on selected filters
   const filteredLaunches = launches.filter((launch) => {
-    return launch?.rocket?.rocket_name
+    const launchNameMatch = launch?.rocket?.rocket_name
       .toLowerCase()
       .includes(searchInput.toLowerCase());
+
+    const statusMatch =
+      launchStatusFilter === "" ||
+      (launchStatusFilter === "fail" && !launch?.launch_success) ||
+      (launchStatusFilter === "success" && launch?.launch_success);
+
+    const currentDate = new Date();
+    currentDate.setMinutes(
+      currentDate.getMinutes() - currentDate.getTimezoneOffset()
+    );
+
+    const launchDate = new Date(launch?.launch_date_local);
+    launchDate.setMinutes(
+      launchDate.getMinutes() - launchDate.getTimezoneOffset()
+    );
+    const dateMatch =
+      dateFilter === "" ||
+      (dateFilter === "week" &&
+        launchDate >=
+          new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000)) ||
+      (dateFilter === "month" &&
+        launchDate >=
+          new Date(currentDate.getTime() - 30 * 24 * 60 * 60 * 1000)) ||
+      (dateFilter === "year" &&
+        launchDate >=
+          new Date(currentDate.getTime() - 365 * 24 * 60 * 60 * 1000));
+
+    const upcomingMatch = !upcomingFilter || launch?.upcoming;
+
+    return launchNameMatch && statusMatch && dateMatch && upcomingMatch;
   });
 
   if (loading) {
@@ -36,7 +72,7 @@ const AllLaunch = () => {
   }
   return (
     <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5">
-      {filteredLaunches.slice(skip, skip + perPage).map((launch) => {
+      {filteredLaunches.slice(skip, skip + perPage).map((launch, i) => {
         const launchDate = new Date(launch?.launch_date_local);
         const formattedDate = launchDate.toLocaleString("en-US", {
           day: "numeric",
@@ -44,7 +80,7 @@ const AllLaunch = () => {
           year: "numeric",
         });
         return (
-          <div key={launch?.flight_number} className="flex justify-center">
+          <div key={i} className="flex justify-center">
             <div className="card lg:w-96 sm:w-80 bg-base-100 border shadow-sm">
               <figure className="pt-8">
                 <img
@@ -79,5 +115,4 @@ const AllLaunch = () => {
     </div>
   );
 };
-
 export default AllLaunch;

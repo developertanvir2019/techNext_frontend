@@ -20,7 +20,6 @@ const AllLaunch = () => {
   const perPage = 9;
   const skip = (pageNumber - 1) * perPage;
   const { loading, launches } = useLaunchesData();
-  console.log(launches);
 
   // Filter launches based on selected filters
   const filteredLaunches = launches.filter((launch) => {

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { DataContext } from "../../Context/valueProvider";
 
 const Pagination = () => {
@@ -21,6 +21,21 @@ const Pagination = () => {
       setPageNumber(pageNumber + 1);
     }
   };
+
+  useEffect(() => {
+    // Get the saved pageNumber from localStorage
+    const savedPageNumber = localStorage.getItem("pageNumber");
+
+    // If a saved value exists, set it as the current pageNumber
+    if (savedPageNumber) {
+      setPageNumber(parseInt(savedPageNumber, 10));
+    }
+  }, [setPageNumber]);
+
+  // Save the pageNumber to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("pageNumber", pageNumber.toString());
+  }, [pageNumber]);
 
   return (
     <div className="flex justify-center  dark:text-gray-100 mt-6">

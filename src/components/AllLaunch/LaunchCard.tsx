@@ -1,7 +1,7 @@
 const LaunchCard = () => {
   return (
     <div className="flex justify-center">
-      <div className="card w-80 bg-base-100 border shadow-sm">
+      <div className="card lg:w-96 sm:w-80 bg-base-100 border shadow-sm">
         <figure className="pt-8">
           <img
             src="https://images2.imgbox.com/4f/e3/I0lkuJ2e_o.png"

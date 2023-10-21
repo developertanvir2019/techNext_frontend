@@ -1,24 +1,45 @@
 import { FiCheck, FiSearch } from "react-icons/fi";
 import { HiChevronDown } from "react-icons/hi";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { DataContext } from "../../Context/valueProvider";
 const Filter = () => {
   const [checked, setChecked] = useState(false);
+  const { setSearchInput } = useContext(DataContext) as {
+    setSearchInput: (searchInput: string) => void;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formElement = e.currentTarget as HTMLFormElement;
+    const inputElement = formElement.querySelector(
+      "input[type='text']"
+    ) as HTMLInputElement;
+    const inputValue = inputElement.value;
+    setSearchInput(inputValue);
+  };
 
   return (
     <div className="lg:flex md:flex sm:block justify-between ">
       {/* search */}
       <div className="lg:relative md:relative top-16">
         <div className="font-sans text-black bg-white w-80">
-          <div className="border rounded overflow-hidden flex">
+          <form
+            onSubmit={handleSubmit}
+            className="border rounded overflow-hidden flex"
+          >
             <input
+              onChange={(e) => setSearchInput(e.target.value)}
               type="text"
               className="px-4 w-full py-2"
               placeholder="Search..."
             />
-            <button className="text-white bg-blue-600 flex items-center justify-center px-4 border-l">
+            <button
+              type="submit"
+              className="text-white bg-blue-600 flex items-center justify-center px-4 border-l"
+            >
               <FiSearch />
             </button>
-          </div>
+          </form>
         </div>
       </div>
 

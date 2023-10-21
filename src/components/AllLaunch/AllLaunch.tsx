@@ -4,12 +4,21 @@ import { useLaunchesData } from "./useLaunchesData";
 import { DataContext } from "../../Context/valueProvider";
 
 const AllLaunch = () => {
-  const { pageNumber } = useContext(DataContext) as {
+  const { pageNumber, searchInput } = useContext(DataContext) as {
     pageNumber: number;
+    searchInput: string;
   };
   const perPage = 9;
   const skip = pageNumber * perPage;
   const { loading, launches } = useLaunchesData();
+
+  console.log(launches);
+  const filteredLaunches = launches.filter((launch) => {
+    return launch?.rocket?.rocket_name
+      .toLowerCase()
+      .includes(searchInput.toLowerCase());
+  });
+
   if (loading) {
     return (
       <div>
@@ -17,8 +26,8 @@ const AllLaunch = () => {
       </div>
     );
   }
-  const limitedLaunches = launches.slice(skip, skip + perPage);
-  if (!loading && !limitedLaunches?.length) {
+
+  if (!loading && !filteredLaunches?.length) {
     return (
       <div className="text-primary text-2xl flex justify-center font-semibold">
         <h1> No Products found</h1>
@@ -27,7 +36,7 @@ const AllLaunch = () => {
   }
   return (
     <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5">
-      {limitedLaunches.map((launch) => {
+      {filteredLaunches.slice(skip, skip + perPage).map((launch) => {
         const launchDate = new Date(launch?.launch_date_local);
         const formattedDate = launchDate.toLocaleString("en-US", {
           day: "numeric",
@@ -50,7 +59,9 @@ const AllLaunch = () => {
                   {launch?.mission_name.slice(0, 18)}
                 </p>
                 <p className="text-gray-500">{launch?.rocket?.rocket_name}</p>
-                <p className="text-gray-500 mt-6">Launch Status:</p>
+                <p className="text-gray-500 mt-6">
+                  Launch Status{launch?.flight_number} :
+                </p>
                 {launch?.launch_success ? (
                   <p className="text-white font-semibold px-4 py-1 rounded cursor-pointer mt-2 bg-green-500">
                     Success

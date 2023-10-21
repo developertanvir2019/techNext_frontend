@@ -71,8 +71,8 @@ const AllLaunch = () => {
 
   if (!loading && !filteredLaunches?.length) {
     return (
-      <div className="text-primary text-2xl flex justify-center font-semibold">
-        <h1> No Products found</h1>
+      <div className="text-blue-600 text-2xl flex justify-center font-semibold">
+        <h1> No Launches found</h1>
       </div>
     );
   }
@@ -91,14 +91,14 @@ const AllLaunch = () => {
               <figure className="pt-8">
                 <img
                   src={launch?.links?.mission_patch_small}
-                  alt="Shoes"
+                  alt={launch?.rocket?.rocket_name}
                   className=" w-32"
                 />
               </figure>
               <div className="card-body pt-3 gap-0 items-center text-center">
                 <p className="text-gray-500">Launch Date: {formattedDate}</p>
                 <p className="text-[1.5rem] font-semibold">
-                  {launch?.mission_name.slice(0, 18)}
+                  {launch?.mission_name.slice(0, 12)}
                 </p>
                 <p className="text-gray-500">{launch?.rocket?.rocket_name}</p>
                 <p className="text-gray-500 mt-6">

@@ -1,3 +1,5 @@
+## https://technext1.netlify.app/
+
 ## Steps of completing the project-
 
 1. Create react app with typescript by vite.

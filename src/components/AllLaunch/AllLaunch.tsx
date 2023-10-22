@@ -2,7 +2,7 @@ import { useContext } from "react";
 import Spinner from "../Spinner/Spinner";
 import { useLaunchesData } from "./useLaunchesData";
 import { DataContext } from "../../Context/valueProvider";
-
+import "./allLaunch.scss";
 const AllLaunch = () => {
   const {
     pageNumber,
@@ -86,13 +86,13 @@ const AllLaunch = () => {
           year: "numeric",
         });
         return (
-          <div key={i} className="flex justify-center">
+          <div key={i} className="flex justify-center image-container">
             <div className="card lg:w-96 sm:w-80 bg-base-100 border shadow-sm">
               <figure className="pt-8">
                 <img
                   src={launch?.links?.mission_patch_small}
                   alt={launch?.rocket?.rocket_name}
-                  className=" w-32"
+                  className="w-32 zoom-image" // Added the "zoom-image" class here
                 />
               </figure>
               <div className="card-body pt-3 gap-0 items-center text-center">

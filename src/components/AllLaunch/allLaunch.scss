@@ -1,0 +1,12 @@
+.image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.zoom-image {
+  transition: transform 0.3s;
+}
+
+.image-container:hover .zoom-image {
+  transform: scale(1.2);
+}

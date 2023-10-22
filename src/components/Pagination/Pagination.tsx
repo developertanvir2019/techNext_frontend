@@ -102,7 +102,7 @@ const Pagination = () => {
   }
 
   return (
-    <div className="flex justify-center dark:text-gray-100 mt-6">
+    <div className="flex justify-center dark:text-gray-100 mt-12">
       <button
         title="previous"
         type="button"

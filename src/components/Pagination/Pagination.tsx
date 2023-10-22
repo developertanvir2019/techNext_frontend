@@ -1,11 +1,15 @@
 import { useContext, useEffect } from "react";
 import { DataContext } from "../../Context/valueProvider";
+import { useLaunchesData } from "../AllLaunch/useLaunchesData";
 
 const Pagination = () => {
+  const { launches } = useLaunchesData();
+  const totalButon = Math.ceil(launches.length / 9);
   const { pageNumber, setPageNumber } = useContext(DataContext) as {
     pageNumber: number;
     setPageNumber: (pageNumber: number) => void;
   };
+
   const handlePageClick = (page: number) => {
     setPageNumber(page);
   };
@@ -17,7 +21,7 @@ const Pagination = () => {
   };
 
   const handleNextClick = () => {
-    if (pageNumber < 3) {
+    if (pageNumber < totalButon) {
       setPageNumber(pageNumber + 1);
     }
   };
@@ -28,7 +32,10 @@ const Pagination = () => {
 
     // If a saved value exists, set it as the current pageNumber
     if (savedPageNumber) {
-      setPageNumber(parseInt(savedPageNumber, 10));
+      const parsedPageNumber = parseInt(savedPageNumber, 10);
+      if (!isNaN(parsedPageNumber)) {
+        setPageNumber(parsedPageNumber);
+      }
     }
   }, [setPageNumber]);
 
@@ -37,8 +44,65 @@ const Pagination = () => {
     localStorage.setItem("pageNumber", pageNumber.toString());
   }, [pageNumber]);
 
+  const visibleButtons = 5;
+  const buttons = [];
+
+  // Calculate the range of page numbers to display based on the current pageNumber
+  const startPage = Math.max(1, pageNumber - 2);
+  const endPage = Math.min(totalButon, startPage + visibleButtons - 1);
+
+  for (let i = startPage; i <= endPage; i++) {
+    buttons.push(
+      <button
+        key={i}
+        type="button"
+        title={`Page ${i}`}
+        className={`inline-flex items-center justify-center w-8 h-10 text-sm font-semibold border ${
+          pageNumber === i ? "bg-blue-600 text-white" : "text-blue-600"
+        }`}
+        onClick={() => handlePageClick(i)}
+      >
+        {i}
+      </button>
+    );
+  }
+
+  if (startPage > 1) {
+    // Display the "..." button if there are pages before the first button
+    buttons.unshift(
+      <button
+        key="ellipsis-prev"
+        type="button"
+        className="inline-flex items-center justify-center w-8 h-10 text-blue-600"
+        onClick={() => {
+          const newPage = Math.max(startPage - visibleButtons, 1);
+          setPageNumber(newPage);
+        }}
+      >
+        ...
+      </button>
+    );
+  }
+
+  if (endPage < totalButon) {
+    // Display the "..." button if there are pages after the last button
+    buttons.push(
+      <button
+        key="ellipsis-next"
+        type="button"
+        className="inline-flex items-center justify-center w-8 h-10 text-blue-600"
+        onClick={() => {
+          const newPage = Math.min(endPage + 1, totalButon);
+          setPageNumber(newPage);
+        }}
+      >
+        ...
+      </button>
+    );
+  }
+
   return (
-    <div className="flex justify-center  dark:text-gray-100 mt-6">
+    <div className="flex justify-center dark:text-gray-100 mt-6">
       <button
         title="previous"
         type="button"
@@ -57,21 +121,7 @@ const Pagination = () => {
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
       </button>
-      {Array.from({ length: 3 }, (_, index) => (
-        <button
-          key={index}
-          type="button"
-          title={`Page ${index + 1}`}
-          className={`inline-flex  items-center justify-center w-8 h-10 text-sm font-semibold border ${
-            pageNumber === index + 1
-              ? "bg-blue-600 text-white"
-              : "text-blue-600"
-          }`}
-          onClick={() => handlePageClick(index + 1)}
-        >
-          {index + 1}
-        </button>
-      ))}
+      {buttons}
       <button
         title="next"
         type="button"
